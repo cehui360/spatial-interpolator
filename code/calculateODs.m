@@ -1,0 +1,9 @@
+function  ODs = calculateODs(subset,x, y)
+center = mean(subset);
+centered_subset = subset - center;
+covariance_matrix = centered_subset' * centered_subset / size(centered_subset, 1);
+[V, D] = eig(covariance_matrix);
+[~, min_eigenvalue_index] = min(diag(D));
+unit_normal = V(:, min_eigenvalue_index);
+ODs = (x - y) * unit_normal;
+ODs = abs(ODs);
